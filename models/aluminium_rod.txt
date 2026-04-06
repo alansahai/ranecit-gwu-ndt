@@ -1,0 +1,1 @@
+Simple cylindrical aluminium rod (600mm x 50mm diameter). Linear scan mode.
