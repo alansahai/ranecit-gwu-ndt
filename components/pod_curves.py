@@ -90,7 +90,7 @@ def render_pod_page():
                 legend=dict(yanchor="bottom", y=0.01, xanchor="right", x=0.99)
             )
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
             
             # Metrics
             m1, m2, m3 = st.columns(3)

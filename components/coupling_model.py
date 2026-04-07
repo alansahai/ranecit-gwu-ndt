@@ -87,6 +87,6 @@ def render_coupling_model_page():
             height=350,
             yaxis_title="Amplitude (%)"
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     st.info("**Key Finding:** Roughness loss dominates at higher frequencies, while interface mismatch (Z) dominates coupling efficiency. Air coupling results in near 100% loss without specialized transducers.")

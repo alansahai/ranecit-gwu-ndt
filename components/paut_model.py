@@ -87,7 +87,7 @@ def render_paut_page():
             height=350,
         )
         
-        st.plotly_chart(fig_polar, use_container_width=True)
+        st.plotly_chart(fig_polar, width="stretch")
         
     st.markdown("### Simulated S-Scan (Sector Scan)")
     
@@ -132,4 +132,4 @@ def render_paut_page():
         height=350
     )
     
-    st.plotly_chart(fig_sscan, use_container_width=True)
+    st.plotly_chart(fig_sscan, width="stretch")

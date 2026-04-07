@@ -119,7 +119,7 @@ with st.sidebar:
         st.markdown("**🧪 Defects**")
         defect_density = st.slider("Porosity Density", 0.05, 0.30, 0.12, 0.01)
         st.markdown("---")
-        run_sim = st.button("▶ RUN SIMULATION", use_container_width=True)
+        run_sim = st.button("▶ RUN SIMULATION", width="stretch")
 
         if st.sidebar.button("🗑 Reset Session"):
             st.session_state.clear()
@@ -360,7 +360,7 @@ elif view_mode == "Simulation Dashboard":
                 title=dict(text="Wave Speed Comparison (m/s)",font=dict(color="#00d4ff",size=12)),
                 legend=dict(bgcolor="rgba(0,0,0,.4)"),
                 xaxis=dict(gridcolor="#162440"),yaxis=dict(gridcolor="#162440",title="m/s"))
-            st.plotly_chart(fig_ws, use_container_width=True)
+            st.plotly_chart(fig_ws, width="stretch")
 
             # Amplitude vs thickness
             t_mm  = np.linspace(1, 50, 300)
@@ -372,7 +372,7 @@ elif view_mode == "Simulation Dashboard":
                 title=dict(text="Amplitude vs Wall Thickness",font=dict(color="#00d4ff",size=12)),
                 xaxis=dict(title="Thickness (mm)",gridcolor="#162440"),
                 yaxis=dict(title="Normalised Amplitude",gridcolor="#162440"))
-            st.plotly_chart(fig_a, use_container_width=True)
+            st.plotly_chart(fig_a, width="stretch")
 
         with pb:
             # Attenuation vs frequency
@@ -395,7 +395,7 @@ elif view_mode == "Simulation Dashboard":
                 title=dict(text="Attenuation α vs Frequency",font=dict(color="#00d4ff",size=12)),
                 xaxis=dict(title="Frequency (MHz)",gridcolor="#162440"),
                 yaxis=dict(title="Attenuation (Np/m)",gridcolor="#162440"))
-            st.plotly_chart(fig_att, use_container_width=True)
+            st.plotly_chart(fig_att, width="stretch")
 
             # TOF vs thickness
             tofs = [mat.compute_tof(t/1000) for t in t_mm]
@@ -405,7 +405,7 @@ elif view_mode == "Simulation Dashboard":
                 title=dict(text="Time-of-Flight vs Thickness",font=dict(color="#00d4ff",size=12)),
                 xaxis=dict(title="Thickness (mm)",gridcolor="#162440"),
                 yaxis=dict(title="TOF (µs)",gridcolor="#162440"))
-            st.plotly_chart(fig_tof, use_container_width=True)
+            st.plotly_chart(fig_tof, width="stretch")
 
         # Porosity sensitivity
         por_r = np.linspace(0,15,120)
@@ -421,7 +421,7 @@ elif view_mode == "Simulation Dashboard":
                        font=dict(color="#00d4ff",size=12)),
             xaxis=dict(title="Porosity (%)",gridcolor="#162440"),
             yaxis=dict(title="Amplitude Factor",gridcolor="#162440"))
-        st.plotly_chart(fig_por, use_container_width=True)
+        st.plotly_chart(fig_por, width="stretch")
 
     # ── GANTRY ANIMATION TAB ─────────────────────────────────
     with tab_gantry:
@@ -438,9 +438,9 @@ elif view_mode == "Simulation Dashboard":
 
         gt1, gt2 = st.tabs(["Porosity Defect Scan", "Cold Shut Defect Scan"])
         with gt1:
-            st.plotly_chart(ga1, use_container_width=True)
+            st.plotly_chart(ga1, width="stretch")
         with gt2:
-            st.plotly_chart(ga2, use_container_width=True)
+            st.plotly_chart(ga2, width="stretch")
 
         st.markdown('<p class="sh">🔬 Sensor Array & A-Scan — Select Position</p>',
                     unsafe_allow_html=True)
@@ -455,12 +455,12 @@ elif view_mode == "Simulation Dashboard":
             st.markdown("**Porosity Simulation**")
             st.plotly_chart(build_sensor_array_panel(
                 sel, d1["amplitude"], d1["frequency"], d1["tof"], d1["defect_mask"]),
-                use_container_width=True)
+                width="stretch")
         with sb:
             st.markdown("**Cold Shut Simulation**")
             st.plotly_chart(build_sensor_array_panel(
                 sel, d2["amplitude"], d2["frequency"], d2["tof"], d2["defect_mask"]),
-                use_container_width=True)
+                width="stretch")
 
     # ── LIVE SIGNAL CHART TAB ────────────────────────────────
     with tab_live:
@@ -475,9 +475,9 @@ elif view_mode == "Simulation Dashboard":
 
         ls1, ls2 = st.tabs(["Porosity Defect", "Cold Shut Defect"])
         with ls1:
-            st.plotly_chart(lc1, use_container_width=True)
+            st.plotly_chart(lc1, width="stretch")
         with ls2:
-            st.plotly_chart(lc2, use_container_width=True)
+            st.plotly_chart(lc2, width="stretch")
 
         # Full static 6-panel comparison
         st.markdown('<p class="sh">📊 Full Signal Comparison — All Metrics</p>',
@@ -510,17 +510,17 @@ elif view_mode == "Simulation Dashboard":
             showlegend=True, legend=dict(bgcolor="rgba(0,0,0,.4)"))
         fig_cmp.update_yaxes(gridcolor="#162440")
         fig_cmp.update_xaxes(gridcolor="#162440")
-        st.plotly_chart(fig_cmp, use_container_width=True)
+        st.plotly_chart(fig_cmp, width="stretch")
 
-        st.plotly_chart(plot_deviation_bars(c1, c2), use_container_width=True)
+        st.plotly_chart(plot_deviation_bars(c1, c2), width="stretch")
 
     # ── 3D DEFECT VIEW TAB ───────────────────────────────────
     with tab_3d:
         st.markdown('<p class="sh">🧊 3D Component — Defect Overlay</p>', unsafe_allow_html=True)
         v1,v2,v3 = st.tabs(["Baseline","Porosity Defects","Cold Shut Defects"])
-        with v1: st.plotly_chart(plot_3d_mesh(mesh,pts,title="Baseline"),use_container_width=True)
-        with v2: st.plotly_chart(plot_3d_mesh(mesh,pts,c1["defect_mask"],"Porosity Overlay"),use_container_width=True)
-        with v3: st.plotly_chart(plot_3d_mesh(mesh,pts,c2["defect_mask"],"Cold Shut Overlay"),use_container_width=True)
+        with v1: st.plotly_chart(plot_3d_mesh(mesh,pts,title="Baseline"),width="stretch")
+        with v2: st.plotly_chart(plot_3d_mesh(mesh,pts,c1["defect_mask"],"Porosity Overlay"),width="stretch")
+        with v3: st.plotly_chart(plot_3d_mesh(mesh,pts,c2["defect_mask"],"Cold Shut Overlay"),width="stretch")
         da,db = st.columns(2)
         with da:
             st.markdown(f"""<div class="defect-box"><h4>⚠️ Porosity / Void Clusters</h4>
@@ -541,8 +541,8 @@ elif view_mode == "Simulation Dashboard":
     with tab_heat:
         st.markdown('<p class="sh">🌡️ Defect Severity Heatmaps</p>', unsafe_allow_html=True)
         hc1, hc2 = st.columns(2)
-        with hc1: st.plotly_chart(plot_heatmap_2d(pts,c1["combined_severity"],"Porosity Severity Map"),use_container_width=True)
-        with hc2: st.plotly_chart(plot_heatmap_2d(pts,c2["combined_severity"],"Cold Shut Severity Map"),use_container_width=True)
+        with hc1: st.plotly_chart(plot_heatmap_2d(pts,c1["combined_severity"],"Porosity Severity Map"),width="stretch")
+        with hc2: st.plotly_chart(plot_heatmap_2d(pts,c2["combined_severity"],"Cold Shut Severity Map"),width="stretch")
         st.markdown("""<div class="info-box">
         Severity = Amplitude Δ × 0.5 + Frequency Δ × 0.3 + TOF Δ(norm) × 0.2 &nbsp;|&nbsp;
         🟢 Green → normal &nbsp; 🔴 Red → defect
@@ -562,11 +562,11 @@ elif view_mode == "Simulation Dashboard":
         dl1, dl2, _ = st.columns([1,1,2])
         with dl1:
             st.download_button("⬇ Report (.txt)", full, "ndt_report.txt",
-                               "text/plain", use_container_width=True)
+                               "text/plain", width="stretch")
         with dl2:
             csv = generate_csv_data(pts, base, d1, d2, c1, c2)
             st.download_button("⬇ Scan Data (.csv)", csv, "ndt_scan_data.csv",
-                               "text/csv", use_container_width=True)
+                               "text/csv", width="stretch")
 
 st.markdown("""<hr><p style="text-align:center;color:#1a3050;font-size:.73rem;
 font-family:monospace;letter-spacing:.1em;">

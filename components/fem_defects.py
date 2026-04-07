@@ -40,7 +40,7 @@ def render_fem_defects_page():
             yaxis_title="Probability Density",
             height=300
         )
-        st.plotly_chart(fig_dist, use_container_width=True)
+        st.plotly_chart(fig_dist, width="stretch")
 
     with col2:
         st.markdown("### Simulated CT Mesh Overlay")
@@ -84,4 +84,4 @@ def render_fem_defects_page():
         layout_kwargs["margin"] = dict(l=0, r=0, b=0, t=0)
         
         fig_mesh.update_layout(**layout_kwargs)
-        st.plotly_chart(fig_mesh, use_container_width=True)
+        st.plotly_chart(fig_mesh, width="stretch")

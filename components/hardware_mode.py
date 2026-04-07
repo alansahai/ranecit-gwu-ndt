@@ -300,7 +300,7 @@ def render_hardware_page():
                 port = st.selectbox("COM Port", ports)
                 c1b, c2b = st.columns(2)
                 with c1b:
-                    if st.button("🔌 Connect", use_container_width=True):
+                    if st.button("🔌 Connect", width="stretch"):
                         if st.session_state.hw_arduino.connect(port):
                             log(f"Connected to {port}", "OK")
                             st.success(f"Connected to {port}")
@@ -308,7 +308,7 @@ def render_hardware_page():
                             log(f"Failed to connect to {port}", "FAIL")
                             st.error("Connection failed")
                 with c2b:
-                    if st.button("⏏ Disconnect", use_container_width=True):
+                    if st.button("⏏ Disconnect", width="stretch"):
                         st.session_state.hw_arduino.disconnect()
                         log("Disconnected", "INFO")
                         st.info("Disconnected")
@@ -332,7 +332,7 @@ def render_hardware_page():
 
         num_pts = st.number_input("Inspection Points", 1, 20, 5)
         tolerance = st.number_input("Tolerance (%)", 1, 50, 12)
-        if st.button("✅ Apply Configuration", use_container_width=True):
+        if st.button("✅ Apply Configuration", width="stretch"):
             st.session_state.hw_num_points = num_pts
             st.session_state.hw_tolerance = tolerance
             st.session_state.hw_baseline = {}
@@ -351,14 +351,14 @@ def render_hardware_page():
 
         wc1, wc2 = st.columns(2)
         with wc1:
-            if st.button("🟢 Start Training", use_container_width=True, type="primary"):
+            if st.button("🟢 Start Training", width="stretch", type="primary"):
                 st.session_state.hw_mode = "training"
                 st.session_state.hw_current_point = 0
                 st.session_state.hw_baseline = {}
                 log("Training mode started", "INFO")
 
         with wc2:
-            if st.button("🔴 Start Testing", use_container_width=True):
+            if st.button("🔴 Start Testing", width="stretch"):
                 if not st.session_state.hw_baseline:
                     st.error("Train on a good part first!")
                 else:
@@ -388,7 +388,7 @@ def render_hardware_page():
                 }, indent=2)
                 st.download_button("💾 Save Baseline", bl_data,
                                    "acoustiscan_baseline.json", "application/json",
-                                   use_container_width=True)
+                                   width="stretch")
         with bc2:
             uploaded = st.file_uploader("📂 Load", type=["json"], label_visibility="collapsed")
             if uploaded:
@@ -422,9 +422,9 @@ def render_hardware_page():
 
             cap_col, skip_col = st.columns([3, 1])
             with cap_col:
-                capture = st.button("🎙 CAPTURE THIS POINT", use_container_width=True, type="primary")
+                capture = st.button("🎙 CAPTURE THIS POINT", width="stretch", type="primary")
             with skip_col:
-                skip = st.button("⏭ Skip", use_container_width=True)
+                skip = st.button("⏭ Skip", width="stretch")
 
             if capture:
                 with st.spinner(f"📡 Capturing Point {cp+1}... Playing chirp & recording ({RECORD_SECONDS}s)"):
@@ -447,7 +447,7 @@ def render_hardware_page():
                     baseline_f = st.session_state.hw_baseline.get(cp, {}).get("freq")
                     fig = plot_fft_spectrum(xf, yf, peak_freq=freq, baseline_freq=baseline_f,
                                             title=f"Point {cp+1} — {'Training' if mode == 'training' else 'Testing'}")
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width="stretch")
 
                     if mode == "training":
                         st.session_state.hw_baseline[cp] = {"freq": freq, "raw": len(raw_data)}
@@ -554,7 +554,7 @@ def render_hardware_page():
 
         import pandas as pd
         df = pd.DataFrame(table_rows)
-        st.dataframe(df, use_container_width=True, hide_index=True)
+        st.dataframe(df, width="stretch", hide_index=True)
 
         verdict_color = "#00ff88" if failed == 0 else "#ff3366"
         verdict_text = "PART OK ✅" if failed == 0 and (passed + skipped) > 0 else \
